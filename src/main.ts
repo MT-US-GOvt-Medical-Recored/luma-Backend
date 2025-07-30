@@ -7,7 +7,7 @@ import { NestExpressApplication } from "@nestjs/platform-express";
 import { urlencoded, json } from "express"; 
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule); 
   const configService = app.get<ConfigService>(ConfigService);
 
   app.set("trust proxy");
