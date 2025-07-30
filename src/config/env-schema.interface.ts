@@ -17,4 +17,6 @@ export interface IEnvSchema {
   MAILTRAP_PORT: string;
   MAILTRAP_USER: string;
   MAILTRAP_PASS: string;
+  GOOGLE_CLIENT_ID: string;
+  GOOGLE_CLIENT_SECRET: string;
 }

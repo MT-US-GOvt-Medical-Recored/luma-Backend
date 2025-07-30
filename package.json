@@ -49,6 +49,7 @@
     "class-validator": "^0.14.0",
     "cryptr": "^6.1.0",
     "dotenv": "^16.0.3",
+    "google-auth-library": "^10.2.0",
     "joi": "^17.7.0",
     "jsonwebtoken": "^9.0.0",
     "my-sql": "^1.2.15",

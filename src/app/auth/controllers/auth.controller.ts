@@ -48,13 +48,10 @@ export class AuthController {
   }
 
   @Public()
-  @ApiOperation({
-    summary: "Authenticate or register via Google and get a JWT token.",
-  })
-  @Post("login-with-google")
-  @HttpCode(HttpStatus.OK)
-  async loginWithGoogle(@Body() body: GoogleLoginDto) {
-    return await this.authService.loginWithGoogle(body);
+  @ApiOperation({ summary: "Google login." })
+  @Post("login-via-google")
+  async loginViaGoogle(@Body() body: LoginViaGoogleRequestDto) {
+    return await this.authService.loginViaGoogle(body);
   }
 
   @ApiOperation({

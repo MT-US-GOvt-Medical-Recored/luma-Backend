@@ -41,6 +41,8 @@ export class ConfigService {
       MAILTRAP_PORT: Joi.string().required(),
       MAILTRAP_USER: Joi.string().required(),
       MAILTRAP_PASS: Joi.string().required(),
+      GOOGLE_CLIENT_ID: Joi.string().trim().min(1).required(),
+      GOOGLE_CLIENT_SECRET: Joi.string().trim().min(1).required(),
     });
     return schema;
   }
@@ -136,6 +138,13 @@ export class ConfigService {
     return this.get("MAILTRAP_PASS");
   }
 
+  getGoogleAuthClientId(): string {
+    return this.get("GOOGLE_CLIENT_ID");
+  }
+
+  getGoogleAuthClientSecret(): string {
+    return this.get("GOOGLE_CLIENT_SECRET");
+  }
   getEmailToSendEmailsFrom(): string {
     return this.get("FROM_EMAIL");
   }
