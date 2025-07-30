@@ -77,7 +77,7 @@ export class ConfigService {
   }
 
   getPort() {
-    return this.get("PORT");
+    return this.get("PORT") || 8080;
   }
 
   getDBUsername() {
