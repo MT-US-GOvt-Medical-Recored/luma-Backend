@@ -13,7 +13,7 @@ import { IAuthenticatedRequest } from "src/shared/interfaces/authenticated-reque
 import {
   LoginDto,
   RegisterDto,
-  GoogleLoginDto,
+  LoginViaGoogleRequestDto,
 } from "../dtos";
 import { AuthService } from "../services";
 
