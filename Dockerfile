@@ -1,5 +1,5 @@
 # Use Node LTS
-FROM node:18-alpine
+FROM node:20
 
 WORKDIR /app
 
@@ -10,5 +10,5 @@ COPY . .
 
 RUN npm run build
 
-EXPOSE 8080
+EXPOSE 5001
 CMD ["npm", "run", "start:dev"]
