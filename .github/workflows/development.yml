@@ -7,7 +7,7 @@ on:
 jobs:
   deploy:
     name: development Server
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, luma-backend]
     environment: development
     env:
       CONTAINER_NAME: dw-node-be-dev
