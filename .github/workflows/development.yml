@@ -1,0 +1,69 @@
+name: development
+
+on:
+  push:
+    branches: [development]
+
+jobs:
+  deploy:
+    name: development Server
+    runs-on: ubuntu-latest
+    environment: development
+    env:
+      CONTAINER_NAME: dw-node-be-dev
+      IMAGE_NAME_TAG: dw-node-be-dev
+      HOST_PORT: 5001
+      CONTAINER_PORT: 4000
+      CHECKOUT_PATH: development
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          clean: false
+          path: ${{ env.CHECKOUT_PATH }}
+
+      - name: Make environment files
+        working-directory: ${{ env.CHECKOUT_PATH }}
+        run: |
+          cat << EOF > .env
+          BASE_URL="${{ secrets.BASE_URL }}"
+          DB_HOST="${{ secrets.DB_HOST }}"
+          DB_NAME="${{ secrets.DB_NAME }}"
+          DB_PASSWORD="${{ secrets.DB_PASSWORD }}"
+          DB_PORT="${{ secrets.DB_PORT }}"
+          DB_USERNAME="${{ secrets.DB_USERNAME }}"
+          EC2_HOST="${{ secrets.EC2_HOST }}"
+          EC2_SSH_PRIVATE_KEY="${{ secrets.EC2_SSH_PRIVATE_KEY }}"
+          EC2_USER="${{ secrets.EC2_USER }}"
+          FROM_EMAIL="${{ secrets.FROM_EMAIL }}"
+          FRONTEND_URL="${{ secrets.FRONTEND_URL }}"
+          GLOBAL_API_PREFIX="${{ secrets.GLOBAL_API_PREFIX }}"
+          JWT_SECRET_KEY="${{ secrets.JWT_SECRET_KEY }}"
+          JWT_TOKEN_EXPIRATION="${{ secrets.JWT_TOKEN_EXPIRATION }}"
+          MAILTRAP_HOST="${{ secrets.MAILTRAP_HOST }}"
+          MAILTRAP_PASS="${{ secrets.MAILTRAP_PASS }}"
+          MAILTRAP_PORT="${{ secrets.MAILTRAP_PORT }}"
+          MAILTRAP_USER="${{ secrets.MAILTRAP_USER }}"
+          NODE_ENV="${{ secrets.NODE_ENV }}"
+          PORT="${{ secrets.PORT }}"
+          SENDGRID_API_KEY="${{ secrets.SENDGRID_API_KEY }}"
+          GOOGLE_CLIENT_ID="${{ secrets.GOOGLE_CLIENT_ID }}"
+          GOOGLE_CLIENT_SECRET="${{ secrets.GOOGLE_CLIENT_SECRET }}"
+          EOF
+      - name: Building and Assigning Tag to image
+        run: |
+          docker build -t "$IMAGE_NAME_TAG" "$CHECKOUT_PATH"
+      - name: Removing old Container if exists
+        run: |
+          docker stop "$CONTAINER_NAME" || true
+          docker rm "$CONTAINER_NAME" || true
+      - name: Starting Docker Container
+        run: |
+          docker run -d -p "$HOST_PORT:$CONTAINER_PORT" --restart unless-stopped --name "$CONTAINER_NAME" "$IMAGE_NAME_TAG"
+      - name: View Docker status
+        run: docker ps
+
+      - name: Cleaning Server
+        run: |
+          echo y | docker image prune --filter "dangling=true"
