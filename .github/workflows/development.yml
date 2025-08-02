@@ -10,10 +10,10 @@ jobs:
     runs-on: [self-hosted, luma-backend]
     environment: development
     env:
-      CONTAINER_NAME: dw-node-be-dev
-      IMAGE_NAME_TAG: dw-node-be-dev
+      CONTAINER_NAME: luma-backend-dev
+      IMAGE_NAME_TAG: luma-backend-dev
       HOST_PORT: 5001
-      CONTAINER_PORT: 4000
+      CONTAINER_PORT: 5001
       CHECKOUT_PATH: development
 
     steps:
